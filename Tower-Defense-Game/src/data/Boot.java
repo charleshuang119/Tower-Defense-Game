@@ -40,12 +40,14 @@ public class Boot {
 			
 			TileGrid grid = new TileGrid(map);
 			grid.SetTile(3, 4, grid.GetTile(1,1).getType());
-			Enemy e = new Enemy(QuickLoad("enemy64"),grid.GetTile(10, 10),64,64,2);
+			Enemy e = new Enemy(QuickLoad("enemy64"),grid.GetTile(10, 10),64,64,6);
+			Wave wave = new Wave(10,e);
+			Player player = new Player(grid);
 			while(!Display.isCloseRequested()) {
 				Clock.update();
-				e.Update();
 				grid.Draw();
-				e.Draw();
+				wave.Update();
+				player.Update();
 				
 				Display.update();
 				Display.sync(60);						
