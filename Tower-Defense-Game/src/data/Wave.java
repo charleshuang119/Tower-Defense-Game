@@ -23,8 +23,10 @@ public class Wave {
 			}
 			
 			for(Enemy e: enemyList) {
-				e.Update();
-				e.Draw();
+				if(e.isAlive()) {
+					e.Update();
+					e.Draw();
+				}
 			}
 		}
 		
