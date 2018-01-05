@@ -9,24 +9,21 @@ public class Game {
 	private WaveManager waveManager;
 	
 	
-	
-	//Temp Variable
-	TowerCannon tower;
 
 	public Game(int[][] map) {
 		grid = new TileGrid(map);
-		player = new Player(grid);
-		waveManager = new WaveManager(new Enemy(QuickLoad("enemy64"),grid.GetTile(10, 8),grid, 64,64,40),
-				4,5);
 		
-		tower = new TowerCannon(QuickLoad("cannonBase"),grid.GetTile(14, 7),7);
+		waveManager = new WaveManager(new Enemy(QuickLoad("enemy64"),grid.GetTile(14, 8),grid, 64,64,70),
+				2,2);
+		player = new Player(grid,waveManager);
+		
 	}
 		
 	public void Update() {
 		grid.Draw();
 		waveManager.update();
-		player.Update();
+		player.update();
 		
-		tower.Update();
+	
 	}
 }
