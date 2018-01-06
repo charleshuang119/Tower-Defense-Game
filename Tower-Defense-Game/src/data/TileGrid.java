@@ -3,9 +3,11 @@ package data;
 public class TileGrid {
 	
 	public Tile[][] map;
-	private int tileWide, tileHigh;
+	private int tilesWide, tilesHigh;
 	
 	public TileGrid(){
+		this.tilesWide = 20;
+		this.tilesHigh = 15;
 		map = new Tile[20][15];
 		for (int i = 0;i<map.length;i++) {
 			for(int j=0;j<map[i].length;j++) {
@@ -15,9 +17,9 @@ public class TileGrid {
 	}
 	
 	public TileGrid(int[][] newMap) {
-		this.tileWide = newMap[0].length;
-		this.tileHigh = newMap.length;
-		map = new Tile[tileWide][tileHigh];
+		this.tilesWide = newMap[0].length;
+		this.tilesHigh = newMap.length;
+		map = new Tile[tilesWide][tilesHigh];
 		for (int i = 0;i<map.length;i++) {
 			for(int j=0;j<map[i].length;j++) {
 				switch(newMap[j][i]) {
@@ -41,7 +43,7 @@ public class TileGrid {
 	
 	
 	public Tile GetTile(int xPlace,int yPlace) {
-		if(xPlace < tileWide && yPlace<tileHigh&& xPlace>-1 && yPlace>-1) {
+		if(xPlace < tilesWide && yPlace<tilesHigh&& xPlace>-1 && yPlace>-1) {
 			return map[xPlace][yPlace];
 		}	
 		else {
@@ -50,20 +52,20 @@ public class TileGrid {
 	}
 	
 	
-	public int getTileWide() {
-		return tileWide;
+	public int getTilesWide() {
+		return tilesWide;
 	}
 
-	public void setTileWide(int tileWide) {
-		this.tileWide = tileWide;
+	public void setTilesWide(int tileWide) {
+		this.tilesWide = tileWide;
 	}
 
-	public int getTileHigh() {
-		return tileHigh;
+	public int getTilesHigh() {
+		return tilesHigh;
 	}
 
-	public void setTileHigh(int tileHigh) {
-		this.tileHigh = tileHigh;
+	public void setTileHigh(int tilesHigh) {
+		this.tilesHigh = tilesHigh;
 	}
 
 	public void Draw() {

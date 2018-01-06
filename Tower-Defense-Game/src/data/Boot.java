@@ -6,6 +6,7 @@ import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.opengl.Texture;
 
 import helpers.Clock;
+import helpers.StateManager;
 
 import static org.lwjgl.opengl.GL11.*;
 import static helpers.Artist.*;
@@ -20,29 +21,14 @@ public class Boot {
 			BeginSession();
 			
 
-			int[][] map= {
-					{0,0,2,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-					{0,0,2,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-					{0,0,2,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-					{0,2,2,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-					{0,2,2,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0},
-					{0,0,2,2,0,0,0,1,1,0,1,1,1,0,0,0,0,0,0,0},
-					{0,0,2,2,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0},
-					{0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-					{0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-			};
+		
 			
-			Game game = new Game(map);
+			//Game game = new Game(map);
 			
 			while(!Display.isCloseRequested()) {
 				Clock.update();
-				game.Update();
+				//game.Update();
+				StateManager.update();
 				Display.update();
 				Display.sync(60);						
 			}

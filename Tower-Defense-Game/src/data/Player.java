@@ -2,6 +2,9 @@ package data;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+
+import helpers.Clock;
+
 import static helpers.Artist.*;
 
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ public class Player {
 		private int index;
 		private WaveManager waveManager;
 		private ArrayList<TowerCannon> towerList;
+		private boolean leftMouseButtonDown;
 		
 		
 		public Player(TileGrid grid, WaveManager waveManager) {
@@ -24,25 +28,29 @@ public class Player {
 			this.index=0;
 			this.waveManager = waveManager;
 			this.towerList = new ArrayList<TowerCannon>();
+			this.leftMouseButtonDown = false;
 		}
 		
-		public void setTile() {
-			grid.SetTile((int)Math.floor(Mouse.getX() / 64),(int)Math.floor((HEIGHT-Mouse.getY()-1)/64),types[index]);
-		}
 		
 		public void update() {
 			for (TowerCannon t: towerList){
 				t.Update();
 			}
 			//0 left, 1 right, handle mouse input
-			if(Mouse.isButtonDown(0)) {
-				setTile();
+			if(Mouse.isButtonDown(0)&& !leftMouseButtonDown) {
+				towerList.add(new TowerCannon(QuickLoad("cannonBase"),grid.GetTile(Mouse.getX()/64, (HEIGHT - Mouse.getY()-1)/64),10,waveManager.getCurrentWave().getEnemyList()));
+				//setTile();
 			}
+			
+			leftMouseButtonDown = Mouse.isButtonDown(0);
 			
 			//Handle keyboard input
 			while(Keyboard.next()) {
 				if(Keyboard.getEventKey()==Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()) {
-					moveIndex();				
+					Clock.ChangeMultiplier(0.2f);				
+				}
+				if(Keyboard.getEventKey()==Keyboard.KEY_LEFT && Keyboard.getEventKeyState()) {
+					Clock.ChangeMultiplier(-0.2f);				
 				}
 				if(Keyboard.getEventKey()== Keyboard.KEY_T && Keyboard.getEventKeyState()){
 					towerList.add(new TowerCannon(QuickLoad("cannonBase"),grid.GetTile(18, 9),10,waveManager.getCurrentWave().getEnemyList()));
@@ -50,10 +58,4 @@ public class Player {
 			}
 		}
 		
-		private void moveIndex() {
-			index++;
-			if(index>types.length-1) {
-				index = 0;
-			}
-		}
 }
