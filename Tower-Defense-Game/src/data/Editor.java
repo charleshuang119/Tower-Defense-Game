@@ -1,14 +1,13 @@
 package data;
 
-import static helpers.Artist.HEIGHT;
-import static helpers.Artist.QuickLoad;
-import static helpers.Leveler.*;
+import static helpers.Artist.*;
+import static helpers.Leveler.loadMap;
+import static helpers.Leveler.saveMap;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import helpers.Clock;
-
-public class Editor {
+public class Editor{
 	
 	private TileGrid grid;
 	private int index;
@@ -24,7 +23,8 @@ public class Editor {
 	}
 	
 	public void update() {
-		grid.Draw();
+		
+		grid.draw();
 		//0 left, 1 right, handle mouse input
 		if(Mouse.isButtonDown(0)) {
 			setTile();
@@ -42,7 +42,7 @@ public class Editor {
 	}
 	
 	private void setTile() {
-		grid.SetTile((int)Math.floor(Mouse.getX() / 64),(int)Math.floor((HEIGHT-Mouse.getY()-1)/64),types[index]);
+		grid.setTile((int)Math.floor(Mouse.getX() / TILE_SIZE),(int)Math.floor((HEIGHT-Mouse.getY()-1)/TILE_SIZE),types[index]);
 	}
 	
 	private void moveIndex() {

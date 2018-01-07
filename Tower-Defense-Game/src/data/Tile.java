@@ -17,14 +17,14 @@ public class Tile {
 			this.texture = QuickLoad(type.textureName);
 		}
 		
-		public void Draw() {
+		public void draw() {
 			DrawQuadTex(texture,x,y,width,height);
 		}
 		public float getX() {
 			return x;
 		}
 		public int getXPlace(){
-			return (int) x/64;
+			return (int) x/TILE_SIZE;
 		}
 		public void setX(float x) {
 			this.x = x;
@@ -33,7 +33,7 @@ public class Tile {
 			return y;
 		}
 		public int getYPlace(){
-			return (int) y/64;
+			return (int) y/TILE_SIZE;
 		}
 		public void setY(float y) {
 			this.y = y;

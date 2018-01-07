@@ -20,6 +20,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Artist {
 
 	public static final int WIDTH =1280, HEIGHT = 960;
+	public static final int TILE_SIZE = 64;
 	
 	public static void BeginSession() {
 		Display.setTitle("Tower Defense Game");
@@ -41,6 +42,15 @@ public class Artist {
 		
 	}
 	
+	public static boolean CheckCollision(float x1,float y1, float width1, float height1,
+			float x2,float y2, float width2,float height2) {
+		if(x1 +width1 >x2&& x1< x2 + width2 && y1+height1>y2 &&y1<y2+height2) {
+			return true;
+		}
+		else return false;
+		
+		
+	}
 	public static void DrawQuad(float x, float y, float width, float height) {
 		glBegin(GL_QUADS);
 		glVertex2f(x, y);//Top left corner
