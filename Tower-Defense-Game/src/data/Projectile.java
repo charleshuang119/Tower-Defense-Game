@@ -7,14 +7,14 @@ import static helpers.Artist.DrawQuadTex;
 import static helpers.Clock.*;
 import static helpers.Artist.*;
 
-public class Projectile {
+public class Projectile implements Entity {
 	private Texture texture;
-	private float x, y, width, height, speed, xVelocity, yVelocity;
-	private int damage;
+	private float x, y,speed, xVelocity, yVelocity;
+	private int damage,width, height;
 	private Enemy target;
 	private boolean alive;
 
-	public Projectile(Texture texture, Enemy target, float x, float y, float width, float height, float speed,
+	public Projectile(Texture texture, Enemy target, float x, float y, int width, int height, float speed,
 			int damage) {
 		this.texture = texture;
 		this.x = x;
@@ -47,7 +47,7 @@ public class Projectile {
 
 	}
 
-	public void Update() {
+	public void update() {
 		if (alive) {
 			x += xVelocity * speed * Delta();
 			y += yVelocity * speed * Delta();
@@ -56,12 +56,62 @@ public class Projectile {
 				target.damage(damage);
 				alive = false;
 			}
-			Draw();
+			draw();
 		}
 	}
 
-	public void Draw() {
+	public void draw() {
 		DrawQuadTex(texture, x, y, 32, 32);
 	}
+
+
+	public float getX() {
+		// TODO Auto-generated method stub
+		return x;
+	}
+
+
+	public float getY() {
+		// TODO Auto-generated method stub
+		return y;
+	}
+
+
+	public int getWidth() {
+		// TODO Auto-generated method stub
+		return width;
+	}
+
+
+	public int getHeight() {
+		// TODO Auto-generated method stub
+		return height;
+	}
+
+
+	public void setX(float x) {
+		// TODO Auto-generated method stub
+		this.x = x;
+	}
+
+
+	public void setY(float y) {
+		// TODO Auto-generated method stub
+		this.y = y;
+	}
+
+	
+	public void setWidth(int width) {
+		// TODO Auto-generated method stub
+		this.width = width;
+	}
+
+	
+	public void setHeight(int height) {
+		// TODO Auto-generated method stub
+		this.height = height;
+	}
+
+
 
 }

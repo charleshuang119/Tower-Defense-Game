@@ -7,6 +7,7 @@ public class Game {
 	private TileGrid grid;
 	private Player player;
 	private WaveManager waveManager;
+	private TowerCannonBlue blue;
 	
 	
 	
@@ -17,11 +18,12 @@ public class Game {
 		waveManager = new WaveManager(new Enemy(QuickLoad("enemy64"),grid.getTile(14, 8),grid, TILE_SIZE,TILE_SIZE,70,25),
 				2, 2);
 		player = new Player(grid,waveManager);
+		blue = new TowerCannonBlue(QuickLoad("cannonBase"),128,128,64,64);
 		
 	}
 		
 	public void Update() {
-		grid.draw();
+		grid.draw();		
 		waveManager.update();
 		player.update();
 

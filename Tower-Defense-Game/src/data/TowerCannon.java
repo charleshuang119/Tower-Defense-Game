@@ -92,7 +92,7 @@ public class TowerCannon {
 			}
 			
 			for(Projectile p: projectiles) {
-				p.Update();
+				p.update();
 			}
 			angle = calculateAngle();
 			draw();
