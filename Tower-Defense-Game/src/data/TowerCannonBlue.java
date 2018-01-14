@@ -1,12 +1,14 @@
 package data;
 
-import org.newdawn.slick.opengl.Texture;
+import java.util.ArrayList;
+
+
 
 public class TowerCannonBlue extends Tower {
 
-	public TowerCannonBlue(Texture texture, float x, float y, int width, int height) {
-		super(texture, x, y, width, height);
-		// TODO Auto-generated constructor stub
+	public TowerCannonBlue(TowerType type,Tile startTile,ArrayList<Enemy> enemies) {
+		super(type,startTile,enemies);
+		
 	}
 	
 	
