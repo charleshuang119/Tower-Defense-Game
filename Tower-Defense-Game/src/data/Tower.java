@@ -5,6 +5,7 @@ import static helpers.Artist.*;
 import static helpers.Clock.Delta;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Tower implements Entity {
 	
@@ -12,11 +13,11 @@ public abstract class Tower implements Entity {
 	private int width,height,damage,range;
 	private Enemy target;
 	private Texture[] textures;
-	private ArrayList<Enemy> enemies;
+	private CopyOnWriteArrayList<Enemy> enemies;
 	private boolean targeted;
 	private ArrayList<Projectile> projectiles;
 	
-	public Tower(TowerType type, Tile startTile,ArrayList<Enemy> enemies) {
+	public Tower(TowerType type, Tile startTile,CopyOnWriteArrayList<Enemy> enemies) {
 		this.textures = type.textures;
 		this.damage = type.damage;
 		this.x = startTile.getX();
@@ -35,7 +36,7 @@ public abstract class Tower implements Entity {
 		Enemy closest = null;
 		float closestDistance = 10000;
 		for(Enemy e: enemies) {
-			if(isInRange(e)&&findDistance(e)<closestDistance) {
+			if(isInRange(e)&&findDistance(e) < closestDistance && e.isAlive()) {
 				closestDistance = findDistance(e);
 				closest = e;
 			}
@@ -68,11 +69,11 @@ public abstract class Tower implements Entity {
 	
 	public void shoot() {
 		timeSinceLastShot = 0;
-		projectiles.add(new Projectile(QuickLoad("projectileIceball"),target, x+TILE_SIZE/2 - TILE_SIZE/4, y+TILE_SIZE/2-TILE_SIZE/4,TILE_SIZE/2,TILE_SIZE/2,900,10));
+		projectiles.add(new ProjectileIceball(QuickLoad("projectileIceball"),target, x+TILE_SIZE/2 - TILE_SIZE/4, y+TILE_SIZE/2-TILE_SIZE/4,TILE_SIZE/2,TILE_SIZE/2,900,10));
 		
 	}
 	
-	public void updateEnemyList(ArrayList<Enemy> newList) {
+	public void updateEnemyList(CopyOnWriteArrayList<Enemy> newList) {
 		enemies = newList;
 	}
 
@@ -80,6 +81,12 @@ public abstract class Tower implements Entity {
 	public void update() {
 		if(!targeted) {
 			target = acquireTarget();
+		} 
+		else {
+			angle = calculateAngle();
+			if  (timeSinceLastShot > firingSpeed) {		 		
+				shoot();
+			}
 		}
 		
 		if(target == null || target.isAlive() == false) {
@@ -87,14 +94,12 @@ public abstract class Tower implements Entity {
 		}
 		
 		timeSinceLastShot += Delta();
-		if(timeSinceLastShot > firingSpeed) {
-			shoot();
-		}
+		
 		
 		for(Projectile p: projectiles) {
 			p.update();
 		}
-		angle = calculateAngle();
+		
 		draw();
 	}
 

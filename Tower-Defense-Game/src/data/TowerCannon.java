@@ -1,9 +1,13 @@
 package data;
 
-import static helpers.Artist.*;
-import static helpers.Clock.*;
+import static helpers.Artist.DrawQuadTex;
+import static helpers.Artist.DrawQuadTexRot;
+import static helpers.Artist.QuickLoad;
+import static helpers.Artist.TILE_SIZE;
+import static helpers.Clock.Delta;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -15,11 +19,11 @@ public class TowerCannon {
 	
 		private Tile startTile;
 		private ArrayList<Projectile> projectiles;
-		private ArrayList<Enemy> enemies;
+		private CopyOnWriteArrayList<Enemy> enemies;
 		private Enemy target;
 		private boolean targeted;
 		
-		public TowerCannon(Texture baseTexture, Tile startTile, int damage,int range, ArrayList<Enemy> enemies) {
+		public TowerCannon(Texture baseTexture, Tile startTile, int damage,int range, CopyOnWriteArrayList<Enemy> enemies) {
 			this.baseTexture = baseTexture;
 			this.cannonTexture = QuickLoad("cannonGun");
 			this.startTile = startTile;
@@ -71,10 +75,10 @@ public class TowerCannon {
 		}
 		public void shoot() {
 			timeSinceLastShot = 0;
-			projectiles.add(new Projectile(QuickLoad("bullet"),target, x+TILE_SIZE/2 - TILE_SIZE/4, y+TILE_SIZE/2-TILE_SIZE/4,TILE_SIZE/2,TILE_SIZE/2,900,10));
+			projectiles.add(new ProjectileIceball(QuickLoad("bullet"),target, x+TILE_SIZE/2 - TILE_SIZE/4, y+TILE_SIZE/2-TILE_SIZE/4,TILE_SIZE/2,TILE_SIZE/2,900,10));
 			
 		}
-		public void updateEnemyList(ArrayList<Enemy> newList) {
+		public void updateEnemyList(CopyOnWriteArrayList<Enemy> newList) {
 			enemies = newList;
 		}
 		public void update() {

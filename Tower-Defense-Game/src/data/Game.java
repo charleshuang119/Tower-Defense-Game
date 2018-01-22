@@ -18,6 +18,7 @@ public class Game {
 		waveManager = new WaveManager(new Enemy(QuickLoad("enemy64"),grid.getTile(14, 8),grid, TILE_SIZE,TILE_SIZE,70,25),
 				2, 2);
 		player = new Player(grid,waveManager);
+		player.setup();
 		
 		
 	}

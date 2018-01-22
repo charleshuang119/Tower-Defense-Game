@@ -7,7 +7,7 @@ import static helpers.Artist.DrawQuadTex;
 import static helpers.Clock.*;
 import static helpers.Artist.*;
 
-public class Projectile implements Entity {
+public abstract class Projectile implements Entity {
 	private Texture texture;
 	private float x, y,speed, xVelocity, yVelocity;
 	private int damage,width, height;
@@ -46,6 +46,11 @@ public class Projectile implements Entity {
 		}
 
 	}
+	
+	public void damage() {
+		target.damage(damage);
+		alive = false;
+	}
 
 	public void update() {
 		if (alive) {
@@ -53,12 +58,12 @@ public class Projectile implements Entity {
 			y += yVelocity * speed * Delta();
 			if (CheckCollision(x, y, width, height, target.getX(), target.getY(), target.getWidth(),
 					target.getHeight())) {
-				target.damage(damage);
-				alive = false;
+				damage();
 			}
 			draw();
 		}
 	}
+	
 
 	public void draw() {
 		DrawQuadTex(texture, x, y, 32, 32);
@@ -111,7 +116,10 @@ public class Projectile implements Entity {
 		// TODO Auto-generated method stub
 		this.height = height;
 	}
-
-
+	
+	public Enemy getTarget() {
+		return target;
+	}
+	
 
 }

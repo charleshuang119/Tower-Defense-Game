@@ -7,9 +7,9 @@ import static helpers.Clock.*;
 import java.util.ArrayList;
 
 public class Enemy implements Entity{
-	private int width,height,health,currentCheckpoint;
-	private float speed,x,y;
-	private Texture texture;
+	private int width,height,currentCheckpoint;
+	private float speed,x,y,health,startHealth;
+	private Texture texture, healthBackground, healthForground, healthBorder;
 	private Tile startTile;
 	private boolean first = true,alive = true;
 	private TileGrid grid;
@@ -17,8 +17,11 @@ public class Enemy implements Entity{
 	private ArrayList<Checkpoint> checkpoints;
 	private int[] directions;
 	
-	public Enemy(Texture texture,Tile startTile,TileGrid grid, int width, int height, float speed, int health) {
+	public Enemy(Texture texture,Tile startTile,TileGrid grid, int width, int height, float speed, float health) {
 		this.texture=texture;
+		this.healthBackground = QuickLoad("healthBackground");
+		this.healthBorder = QuickLoad("healthBorder");
+		this.healthForground = QuickLoad("healthForground");
 		this.startTile = startTile;
 		this.x=startTile.getX();
 		this.y=startTile.getY();
@@ -26,6 +29,7 @@ public class Enemy implements Entity{
 		this.height = height;
 		this.speed = speed;	
 		this.health = health;
+		this.startHealth = health;
 		this.grid = grid;
 		this.checkpoints = new ArrayList<Checkpoint>();
 		this.directions = new int[2];
@@ -41,7 +45,7 @@ public class Enemy implements Entity{
 		else {
 			if(checkpointReached()){
 				if(currentCheckpoint+1 == checkpoints.size()){
-					die();
+					endOfMazeReached();
 				}
 				else{
 					currentCheckpoint++;
@@ -52,6 +56,11 @@ public class Enemy implements Entity{
 				y += Delta() * checkpoints.get(currentCheckpoint).getyDirection()*speed;	
 			}	
 		}
+	}
+	
+	private void endOfMazeReached() {
+		Player.modifyLives(-1);
+		die();
 	}
 	
 	private boolean checkpointReached(){
@@ -146,6 +155,7 @@ public class Enemy implements Entity{
 		health -= amount;
 		if(health <= 0) {
 			die();
+			Player.modifyCash(5);
 		}
 	}
 	
@@ -154,7 +164,11 @@ public class Enemy implements Entity{
 	}
 	
 	public void draw() {
+		float healthPercentage = health/startHealth;
 		DrawQuadTex(texture,x,y,width,height);
+		DrawQuadTex(healthBackground,x,y - 12,width,11);		
+		DrawQuadTex(healthForground,x,y-12,TILE_SIZE * healthPercentage,11);
+		DrawQuadTex(healthBorder,x,y-12,width,11);
 	}
 
 	public int getWidth() {
@@ -173,7 +187,7 @@ public class Enemy implements Entity{
 		this.height = height;
 	}
 
-	public int getHealth() {
+	public float getHealth() {
 		return health;
 	}
 
