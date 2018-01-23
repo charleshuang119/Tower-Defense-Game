@@ -14,15 +14,14 @@ public abstract class Projectile implements Entity {
 	private Enemy target;
 	private boolean alive;
 
-	public Projectile(Texture texture, Enemy target, float x, float y, int width, int height, float speed,
-			int damage) {
-		this.texture = texture;
+	public Projectile(ProjectileType type, Enemy target, float x, float y, int width, int height) {
+		this.texture = type.texture;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.speed = speed;
-		this.damage = damage;
+		this.speed = type.speed;
+		this.damage = type.damage;
 		this.target = target;
 		this.alive = true;
 		this.xVelocity = 0f;
@@ -38,6 +37,8 @@ public abstract class Projectile implements Entity {
 		float xPercentOfMovement = xDistanceFromTarget / totalDistanceFromTarget;
 		xVelocity = xPercentOfMovement;
 		yVelocity = totalAllowedMovement - xPercentOfMovement;
+		
+		//Set direction based on position of target relative to tower
 		if (target.getX() < x) {
 			xVelocity *= -1;
 		}
@@ -47,6 +48,7 @@ public abstract class Projectile implements Entity {
 
 	}
 	
+	//Deal damage to Enemy
 	public void damage() {
 		target.damage(damage);
 		alive = false;
@@ -71,49 +73,49 @@ public abstract class Projectile implements Entity {
 
 
 	public float getX() {
-		// TODO Auto-generated method stub
+		
 		return x;
 	}
 
 
 	public float getY() {
-		// TODO Auto-generated method stub
+		
 		return y;
 	}
 
 
 	public int getWidth() {
-		// TODO Auto-generated method stub
+		
 		return width;
 	}
 
 
 	public int getHeight() {
-		// TODO Auto-generated method stub
+		
 		return height;
 	}
 
 
 	public void setX(float x) {
-		// TODO Auto-generated method stub
+		
 		this.x = x;
 	}
 
 
 	public void setY(float y) {
-		// TODO Auto-generated method stub
+		
 		this.y = y;
 	}
 
 	
 	public void setWidth(int width) {
-		// TODO Auto-generated method stub
+	
 		this.width = width;
 	}
 
 	
 	public void setHeight(int height) {
-		// TODO Auto-generated method stub
+	
 		this.height = height;
 	}
 	

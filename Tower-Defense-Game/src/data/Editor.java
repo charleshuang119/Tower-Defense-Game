@@ -25,6 +25,7 @@ public class Editor{
 	public void update() {
 		
 		grid.draw();
+		
 		//0 left, 1 right, handle mouse input
 		if(Mouse.isButtonDown(0)) {
 			setTile();
@@ -45,6 +46,7 @@ public class Editor{
 		grid.setTile((int)Math.floor(Mouse.getX() / TILE_SIZE),(int)Math.floor((HEIGHT-Mouse.getY()-1)/TILE_SIZE),types[index]);
 	}
 	
+	//Allows editor to change which TileType is selected
 	private void moveIndex() {
 		index++;
 		if(index>types.length-1) {

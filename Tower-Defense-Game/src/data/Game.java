@@ -7,7 +7,6 @@ public class Game {
 	private TileGrid grid;
 	private Player player;
 	private WaveManager waveManager;
-	private TowerCannonBlue blue;
 	
 	
 	

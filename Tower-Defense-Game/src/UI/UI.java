@@ -3,7 +3,6 @@ package UI;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.opengl.Texture;
 import static helpers.Artist.*;
 
 public class UI {

@@ -34,8 +34,9 @@ public class Player {
 			
 		}
 		
+		//Initialize Cash and Lives value for player
 		public void setup() {
-			Cash = 50;
+			Cash = 200;
 			Lives = 10;
 		}
 		
@@ -54,6 +55,8 @@ public class Player {
 		}
 		
 		public void update() {
+			
+			//Update all tower in the game
 			for (Tower t: towerList){
 				t.update();
 				t.draw();
