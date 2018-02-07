@@ -38,10 +38,11 @@ public class Player {
 
 	// Initialize Cash and Lives value for player
 	public void setup() {
-		Cash = 200;
-		Lives = 10;
+		Cash = 50;
+		Lives = 3;
 	}
 
+	//Check if player can afford  tower, if so , charge player tower cost
 	public static boolean modifyCash(int amount) {
 		if (Cash + amount >= 0) {
 			Cash = Cash + amount;
@@ -62,7 +63,9 @@ public class Player {
 		if (holdingTower) {
 			tempTower.setX(getMouseTile().getX());
 			tempTower.setY(getMouseTile().getY());
-			tempTower.draw();
+			if(!(tempTower.getX()<64&&tempTower.getY()<64)) {
+				tempTower.draw();
+			}
 		}
 
 		// Update all tower in the game
@@ -95,13 +98,17 @@ public class Player {
 	}
 
 	private void placeTower() {
+		Tile currentTile = getMouseTile();
+		
 		if (holdingTower) {
-			if (modifyCash(-tempTower.getCost())) {
+			if (!currentTile.getIccupied() && modifyCash(-tempTower.getCost()) ) {
 				towerList.add(tempTower);
+				currentTile.setOccupied(true);
+				holdingTower = false;
+				tempTower = null;
 			}
 		}
-		holdingTower = false;
-		tempTower = null;
+		
 		
 	}
 

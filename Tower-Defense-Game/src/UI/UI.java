@@ -1,17 +1,31 @@
 package UI;
 
+import java.awt.Font;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.TrueTypeFont;
+
 import static helpers.Artist.*;
 
 public class UI {
 
 	private ArrayList<Button> buttonList;
 	private ArrayList<Menu> menuList;
+	private TrueTypeFont font;
+	private Font awtFont;
+	
+	
 	public UI() {
 		this.buttonList = new ArrayList<Button>();
 		this.menuList = new ArrayList<Menu>();
+		awtFont = new Font("Times New Roman", Font.BOLD,24);
+		font = new TrueTypeFont(awtFont,false);
+		
+	}
+	
+	public void drawString(int x, int y, String text) {
+		font.drawString(x, y, text);
 	}
 	
 	public void addButton(String name, String textureName, int x, int y) {

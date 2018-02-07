@@ -6,6 +6,7 @@ import static helpers.Leveler.*;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.opengl.Texture;
 
 import UI.UI;
 import UI.UI.Menu;
@@ -17,6 +18,8 @@ public class Editor{
 	private TileType[] types;
 	private UI editorUI;
 	private Menu tilePickerMenu;
+	private Texture menuBackground;
+
 	
 	public Editor() {
 		this.grid = LoadMap("newMap1");
@@ -25,6 +28,7 @@ public class Editor{
 		this.types[0] = TileType.Grass;
 		this.types[1] = TileType.Dirt;
 		this.types[2] = TileType.Water;
+		this.menuBackground = QuickLoad("menu_background");
 		setupUI();
 	}
 	
@@ -39,7 +43,8 @@ public class Editor{
 	public void update() {
 		
 		draw();
-		
+		editorUI.drawString(1300,700,"Press S to save");
+		editorUI.drawString(1350,720,"map");
 		// Handle Mouse Input
 		if (Mouse.next()) {
 			boolean mouseClicked = Mouse.isButtonDown(0);
@@ -71,13 +76,17 @@ public class Editor{
 	}
 	
 	private void draw() {
-		DrawQuadTex(QuickLoad("menu_background"),1280,0,192,960);
+		DrawQuadTex(menuBackground,1280,0,192,960);
 		grid.draw();
 		editorUI.draw();
 	}
 	
 	private void setTile() {
-		grid.setTile((int)Math.floor(Mouse.getX() / TILE_SIZE),(int)Math.floor((HEIGHT-Mouse.getY()-1)/TILE_SIZE),types[index]);
+		int xCoord = (int)Math.floor(Mouse.getX() / TILE_SIZE);
+		int yCoord = (int)Math.floor((HEIGHT-Mouse.getY()-1)/TILE_SIZE);
+		if(xCoord < 20 && yCoord <15) {
+			grid.setTile(xCoord,yCoord,types[index]);
+		}
 	}
 	
 	//Allows editor to change which TileType is selected

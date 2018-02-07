@@ -39,7 +39,7 @@ public class TileGrid {
 	}
 	
 	public void setTile(int xCoord, int yCoord, TileType type) {
-		map[xCoord][yCoord] = new Tile(xCoord*TILE_SIZE,yCoord*TILE_SIZE,TILE_SIZE,TILE_SIZE,type);
+			map[xCoord][yCoord] = new Tile(xCoord*TILE_SIZE,yCoord*TILE_SIZE,TILE_SIZE,TILE_SIZE,type);
 	}
 	
 	

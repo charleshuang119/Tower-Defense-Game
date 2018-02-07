@@ -1,13 +1,14 @@
 package data;
 
 import static helpers.Artist.QuickLoad;
-import static helpers.Artist.TILE_SIZE;
+
 import static helpers.Artist.DrawQuadTex;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.opengl.Texture;
 
-import UI.Button;
 import UI.UI;
 import UI.UI.Menu;
+import helpers.StateManager;
 
 public class Game {
 
@@ -16,22 +17,26 @@ public class Game {
 	private WaveManager waveManager;
 	private UI gameUI;
 	private Menu towerPickerMenu;
+	private Texture menuBackground;
+	private Enemy[] enemyTypes;
 
 	public Game(TileGrid grid) {
 		this.grid = grid;
-
-		waveManager = new WaveManager(
-				new Enemy(QuickLoad("enemy64"), grid.getTile(2, 0), grid, TILE_SIZE, TILE_SIZE, 70, 25), 2, 2);
+		enemyTypes = new Enemy[3];
+		enemyTypes[0] = new EnemyAlien(0,0,grid);
+		enemyTypes[1] = new EnemyUFO(0,0,grid);
+		enemyTypes[2] = new EnemyPlane(0,0,grid);
+		
+		waveManager = new WaveManager(enemyTypes,3,5);
 		player = new Player(grid, waveManager);
 		player.setup();
+		this.menuBackground = QuickLoad("menu_background2");
 		setupUI();
 
 	}
 
 	private void setupUI() {
 		gameUI = new UI();
-		//towerPickerUI.addButton("CannonBlue", "cannonGunBlue", 0, 0);
-		//towerPickerUI.addButton("CannonIce", "cannonIceGun", 64, 0);
 		gameUI.createMenu("TowerPicker", 1280, 100,192,960,2,0);
 		towerPickerMenu = gameUI.getMenu("TowerPicker");
 		towerPickerMenu.quickAdd("BlueCannon", "cannonBaseBlue");
@@ -41,9 +46,14 @@ public class Game {
 
 	private void updateUI() {
 		gameUI.draw();
+		gameUI.drawString(1320,700,"Lives: "+ Player.Lives);
+		gameUI.drawString(1320, 800, "Cash: "+Player.Cash);
+		gameUI.drawString(1320, 600, "Wave: "+ waveManager.getWaveNumber());
+		gameUI.drawString(0,0,StateManager.framesInLastSecond+" fps");
 		if (Mouse.next()) {
 			boolean mouseClicked = Mouse.isButtonDown(0);
 			if (mouseClicked) {
+				
 				if (towerPickerMenu.isButtonClicked("BlueCannon")) {
 					player.pickTower(new TowerCannonBlue(TowerType.CannonBlue, grid.getTile(0, 0),
 							waveManager.getCurrentWave().getEnemyList()));
@@ -56,7 +66,7 @@ public class Game {
 	}
 
 	public void Update() {
-		DrawQuadTex(QuickLoad("menu_background2"),1280,0,192,960);
+		DrawQuadTex(menuBackground,1280,0,192,960);
 		grid.draw();
 		waveManager.update();
 		player.update();
