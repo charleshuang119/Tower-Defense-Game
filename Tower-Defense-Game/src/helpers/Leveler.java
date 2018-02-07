@@ -30,14 +30,28 @@ public class Leveler {
 	public static TileGrid LoadMap(String mapName) {
 		TileGrid grid = new TileGrid();
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(mapName));
-			String data = br.readLine();
-			for(int i = 0;i<grid.getTilesWide();i++) {
-				for(int j = 0; j < grid.getTilesHigh();j++) {
-					grid.setTile(i, j, getTileType(data.substring(i*grid.getTilesHigh()+j, i*grid.getTilesHigh()+j+1)));
+			File map = new File(mapName);
+			if(!map.isFile()) {
+				String data ="100100000000000110111110000000010000010000000012000011111100012222200000110012222200000011012000000222221010000000022001010222200002201012002000222221012002000000001010222200220001010000000022221012222200022221010220000220011010022000000110012222211111100010000010000000011111110000000000000000000000";
+				for(int i = 0;i<grid.getTilesWide();i++) {
+					for(int j = 0; j < grid.getTilesHigh();j++) {
+						grid.setTile(i, j, getTileType(data.substring(i*grid.getTilesHigh()+j, i*grid.getTilesHigh()+j+1)));
+					}
 				}
+				
+			BufferedReader br = new BufferedReader(new FileReader(mapName));
 			}
-			br.close();
+			else {
+				BufferedReader br = new BufferedReader(new FileReader(mapName));
+				String data = br.readLine();
+				for(int i = 0;i<grid.getTilesWide();i++) {
+					for(int j = 0; j < grid.getTilesHigh();j++) {
+						grid.setTile(i, j, getTileType(data.substring(i*grid.getTilesHigh()+j, i*grid.getTilesHigh()+j+1)));
+					}
+				}
+				br.close();
+			}
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
