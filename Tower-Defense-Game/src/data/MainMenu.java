@@ -37,7 +37,7 @@ public class MainMenu {
 	}
 
 	public void update() {
-		DrawQuadTex(background,0,0,2048,1024);
+		DrawQuadTex(background,0,0,2360,1024);
 		menuUI.draw();
 		updateButtons();
 	}

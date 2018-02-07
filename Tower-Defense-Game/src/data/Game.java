@@ -46,6 +46,8 @@ public class Game {
 
 	private void updateUI() {
 		gameUI.draw();
+		gameUI.drawString(1290,400,"Click tower icon ");
+		gameUI.drawString(1290,450,"to place a tower ");
 		gameUI.drawString(1320,700,"Lives: "+ Player.Lives);
 		gameUI.drawString(1320, 800, "Cash: "+Player.Cash);
 		gameUI.drawString(1320, 600, "Wave: "+ waveManager.getWaveNumber());
